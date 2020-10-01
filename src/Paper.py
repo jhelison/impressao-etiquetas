@@ -6,9 +6,6 @@ from src.Tag import Tag
 def cmToPixel(cms):
     return int(cms * 370.7952755906)
 
-ETIWIDHT = cmToPixel(6.35)
-ETIHEIGHT = cmToPixel(3.1)
-
 PAPERWIDHT = cmToPixel(21)
 PAPERHEIGHT = cmToPixel(29.7)
 
@@ -22,9 +19,9 @@ class Paper():
     def buildPaper(self):
         self.paper = Image.new('RGBA', (PAPERWIDHT, PAPERHEIGHT), 'white')
         
-        tag = Tag("Teste de separação de palavras", 20, 31205)
+        tag = Tag("Teste de ", 20, 31205)
         
-        self.paper.paste(tag.img, (int((PAPERWIDHT / 2) - ETIWIDHT / 2), int((PAPERHEIGHT / 2) - ETIHEIGHT / 2)))
+        self.paper.paste(tag.img, (int((PAPERWIDHT / 2) - tag.TAGWIDHT / 2), int((PAPERHEIGHT / 2) - tag.TAGHEIGHT / 2)))
         
         self.paper.save('img.png')
         
