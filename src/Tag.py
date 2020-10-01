@@ -19,6 +19,7 @@ class Tag():
         self.buildImg()
         self.addLogoText()
         self.addProductText()
+        self.addValue()
         
     def buildImg(self):
         self.img = Image.new('RGBA', (self.TAGWIDHT, self.TAGHEIGHT), 'yellow')
@@ -53,10 +54,24 @@ class Tag():
         font = ImageFont.truetype("arial.ttf", size=180)
         
         for index, line in enumerate(lines):
-            separation = 180 * index
-            heightPosition = 60 + 150 + separation
+            if len(lines) == 1:
+                startinPoint = (180 * 3) / 2 - (180 / 2)
+            if len(lines) == 2:
+                startinPoint = ((180 * 3) / 2) - 180
+            if len(lines) == 3:
+                startinPoint = 0
+                
+            heightPosition = 60 + 150 + 30 + startinPoint + 180 * index
             center_text = int(math.floor((self.TAGWIDHT / 2) - (font.getsize(line)[0] / 2)))
             self.idraw.text((center_text, heightPosition), line, 'black', font)
+            
+    def addValue(self):
+        text = self.value[:-2] + ' R$'
+        font = ImageFont.truetype("arial.ttf", size=240)
+        center_text = int(math.floor((self.TAGWIDHT / 2) - (font.getsize(text)[0] / 2)))
+        heightPosition = 60 + 150 + 180 * 3 + 60
+        self.idraw.text((center_text, heightPosition), text, 'black', font)
+        
             
         
     
