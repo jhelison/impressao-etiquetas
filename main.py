@@ -1,3 +1,3 @@
-from src.etiqueta import etiqueta
+from src.Paper import Paper
 
-etiqueta()
+Paper()
