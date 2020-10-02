@@ -20,9 +20,10 @@ class Tag():
         self.addLogoText()
         self.addProductText()
         self.addValue()
+        self.addCode()
         
     def buildImg(self):
-        self.img = Image.new('RGBA', (self.TAGWIDHT, self.TAGHEIGHT), 'yellow')
+        self.img = Image.new('RGBA', (self.TAGWIDHT, self.TAGHEIGHT), 'white')
         self.idraw = ImageDraw.Draw(self.img)
         
     def addLogoText(self):
@@ -32,7 +33,7 @@ class Tag():
         
     def addProductText(self):
         lines = []
-        words = self.name.split()
+        words = (self.name).split()
         line = ''
         for index, word in enumerate(words):
             nextWord = False
@@ -67,11 +68,18 @@ class Tag():
             
     def addValue(self):
         text = self.value[:-2] + ' R$'
-        font = ImageFont.truetype("arial.ttf", size=240)
+        font = ImageFont.truetype("arial.ttf", size=300)
         center_text = int(math.floor((self.TAGWIDHT / 2) - (font.getsize(text)[0] / 2)))
-        heightPosition = 60 + 150 + 180 * 3 + 60
+        heightPosition = 60 + 150 + 180 * 3 + 60 - 65
         self.idraw.text((center_text, heightPosition), text, 'black', font)
         
-            
+    def addCode(self):
+        text = "REF:" + self.code
+        
+        font = ImageFont.truetype("arial.ttf", size=80)
+        center_text = int(math.floor((self.TAGWIDHT / 2) - (font.getsize(text)[0] / 2)))
+        heightPosition = 60 + 150 + 180 * 3 + 60 + 240 + 5
+        
+        self.idraw.text((center_text, heightPosition), text, 'black', font)
         
     
