@@ -24,7 +24,17 @@
        <item>
         <layout class="QVBoxLayout" name="vlInputTW">
          <item>
-          <widget class="QTableWidget" name="tableWidget_2"/>
+          <widget class="QTableWidget" name="tableWidget_2">
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SingleSelection</enum>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectColumns</enum>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -75,7 +85,17 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <widget class="QTableWidget" name="twOutputItens"/>
+          <widget class="QTableWidget" name="twOutputItens">
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SingleSelection</enum>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectRows</enum>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -174,7 +194,7 @@
               <number>1</number>
              </property>
              <property name="maximum">
-              <number>6</number>
+              <number>9</number>
              </property>
             </widget>
            </item>

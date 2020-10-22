@@ -4,6 +4,19 @@ import math
 import sys
 import time
 
+def numToMoney(value):
+    returnValue = ""
+    valueSeparated = value.split(".")
+    if len(valueSeparated) == 1:
+        returnValue = "R$ " + valueSeparated[0] + ".00"
+    else:
+        if len(list(valueSeparated[1])) == 1:
+            returnValue = "R$ " + valueSeparated[0] + "." + valueSeparated[1] + "0"
+        else:
+            returnValue = "R$ " + valueSeparated[0] + "." + valueSeparated[1]
+    
+    return returnValue
+
 class QTableWidgetHandler(QtWidgets.QMainWindow):
     def __init__(self, Qlayout, qTableWidget, dataBaseAPI = None, dataLimit = 50, addPaging = False, addFilter = False):
         super().__init__()
@@ -50,10 +63,13 @@ class QTableWidgetHandler(QtWidgets.QMainWindow):
         if self.data:
             for column in range(len(self.data['columns'])):
                 for row in range(len(self.data['data'])):
-                    newitem = QtWidgets.QTableWidgetItem((str(self.data['data'][row][column])))
+                    if column == 2:
+                        newitem = QtWidgets.QTableWidgetItem(numToMoney(str(self.data['data'][row][column])))
+                    else:
+                        newitem = QtWidgets.QTableWidgetItem((str(self.data['data'][row][column])))
                     self.qTableWidget.setItem(row, column, newitem)
                     
-        self.qTableWidget.setSortingEnabled(True)
+        self.qTableWidget.resizeColumnsToContents()
         
     def setupFilter(self):
         self.executing = False
@@ -73,6 +89,9 @@ class QTableWidgetHandler(QtWidgets.QMainWindow):
         self.qTableWidget = QtWidgets.QTableWidget()
         self.qTableWidget.setObjectName(name)
         self.Qlayout.addWidget(self.qTableWidget)
+        self.qTableWidget.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
+        self.qTableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.qTableWidget.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
         
         self.fillTable(page = self.selectedPage, limit = self.dataLimit)
 

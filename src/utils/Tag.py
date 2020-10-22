@@ -38,7 +38,7 @@ class Tag():
         for index, word in enumerate(words):
             nextWord = False
             while not nextWord:
-                if len(line + ' ' + word) <= 23:
+                if len(line + ' ' + word) <= 22:
                     if line == '':
                         line = word
                     else:
@@ -67,7 +67,7 @@ class Tag():
             self.idraw.text((center_text, heightPosition), line, 'black', font)
             
     def addValue(self):
-        text = self.value[:-2] + ' R$'
+        text = self.value
         font = ImageFont.truetype("arial.ttf", size=300)
         center_text = int(math.floor((self.TAGWIDHT / 2) - (font.getsize(text)[0] / 2)))
         heightPosition = 60 + 150 + 180 * 3 + 60 - 65

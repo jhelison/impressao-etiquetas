@@ -1,7 +1,8 @@
 from PIL import Image, ImageDraw, ImageFont
 import math
+import os
 
-from src.Tag import Tag
+from src.utils.Tag import Tag
 
 def cmToPixel(cms):
     return int(cms * 370.7952755906)
@@ -20,26 +21,65 @@ class Paper():
         
         self.maxHorizontalTags = 3
         self.maxVerticalTags = 9
+                
+    def buildPaper(self, data, startX, startY):
+        images = []
+        pagNum = 1
         
-        self.buildPaper()
+        xPos = startX
+        yPos = startY
         
-    def buildPaper(self):
         self.paper = Image.new('RGB', (PAPERWIDHT, PAPERHEIGHT), 'white')
         
-        tag = Tag("BOMBA SUBM. 220V 380W SD3/4 680 HB MASCOTE asd asd tesa", "220,0000", "000001")
+        tag = Tag("", "", "")
         
-        HorizontalPos = self.PageHorizontalSpacing
-        VerticalPos = self.PageVerticalSpacing
+        HorizontalPos = self.PageHorizontalSpacing + (tag.TAGWIDHT + self.TagHorizontalSpacing) * (xPos - 1)
+        VerticalPos = self.PageVerticalSpacing + (tag.TAGHEIGHT + self.TagVerticalSpacing) * (yPos - 1)
         
-        for y in range(self.maxVerticalTags):
-            for x in range(self.maxHorizontalTags):
+        for tagData in data:
+            tag = Tag(tagData[1], tagData[2], tagData[0])
+            
+            tagNum = 1
+
+            while tagNum <= tagData[3]:
+                print(tagData[3], tagNum)
                 self.paper.paste(tag.img, (HorizontalPos, VerticalPos))
+                tagNum += 1
+                xPos += 1
+                
                 HorizontalPos = HorizontalPos + tag.TAGWIDHT + self.TagHorizontalSpacing
-            HorizontalPos = self.PageHorizontalSpacing
-            VerticalPos = VerticalPos + tag.TAGHEIGHT + self.TagVerticalSpacing
-        
-        
-        
-        self.paper.save('img.pdf')
+                
+                if xPos > self.maxHorizontalTags:
+                    xPos = 1
+                    yPos += 1
+                    VerticalPos = VerticalPos + tag.TAGHEIGHT + self.TagVerticalSpacing
+                    HorizontalPos = self.PageHorizontalSpacing
+                    if yPos > self.maxVerticalTags:
+                        pagNum += 1
+                        yPos = 1
+                        
+                        images.append(self.paper)
+                        self.paper = Image.new('RGB', (PAPERWIDHT, PAPERHEIGHT), 'white')
+                        VerticalPos = self.PageVerticalSpacing
+                        
+        if xPos != 1 or yPos != 1:
+            images.append(self.paper)
+                
+                
+        images[0].save("out.pdf", save_all=True, append_images=images[1:], resolution=300)
+        os.startfile("out.pdf")
+                
+                    
+                    
+                    # for y in range(self.maxVerticalTags):
+                    #     for x in range(self.maxHorizontalTags):
+                    #         self.paper.paste(tag.img, (HorizontalPos, VerticalPos))
+                    #         HorizontalPos = HorizontalPos + tag.TAGWIDHT + self.TagHorizontalSpacing
+                    #     HorizontalPos = self.PageHorizontalSpacing
+                        
+                
+            
+            
+
         
         

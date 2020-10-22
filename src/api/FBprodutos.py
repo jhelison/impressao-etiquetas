@@ -5,10 +5,7 @@ class FBprodutos():
     def __init__(self, cur):
         self.cur = cur
         
-        self.COLUMNS = [column[0].strip() for column in self.cur.execute("""SELECT rdb$field_name 
-                                                                        FROM rdb$relation_fields 
-                                                                        WHERE rdb$relation_name=\'PRODUTO\' 
-                                                                        ORDER BY rdb$field_position""").fetchall()]
+        self.COLUMNS = ["CODIGO", "NOMEPROD", "PRECO"]
                         
         self.dataLen = self.getDataLen()
         self.totalLen = self.dataLen
@@ -23,16 +20,19 @@ class FBprodutos():
             pagingSQL = ""
         
         if filter[1]:
-            filterSQL = f"WHERE {filter[0]} LIKE \'%{filter[1]}%\'"
+            filterSQL = f"AND {filter[0]} LIKE \'%{filter[1]}%\'"
         else:
             filterSQL = ""
             
-        fullSql = f"SELECT {pagingSQL} * FROM PRODUTO {filterSQL}"
+        fullSql = f"SELECT {pagingSQL} CODIGO, NOMEPROD, PRECO FROM PRODUTO LEFT JOIN PRODUTOPRECO ON PRODUTO.CODPROD = PRODUTOPRECO.CODPROD WHERE CODPRECO = 1 {filterSQL}"
+        
+        print("SQL GET 1 ", fullSql)
         
         data['data'] = self.cur.execute(fullSql).fetchall()
         
         if filter[1]:
-            fullSQL = f"SELECT COUNT(CODPROD) FROM PRODUTO {filterSQL}"
+            fullSQL = f"SELECT COUNT(CODIGO) FROM PRODUTO LEFT JOIN PRODUTOPRECO ON PRODUTO.CODPROD = PRODUTOPRECO.CODPROD WHERE CODPRECO = 1 {filterSQL}"
+            print("SQL GET 2 ", fullSql)
             self.dataLen = self.cur.execute(fullSQL).fetchall()[0][0]
         else:
             self.dataLen = self.totalLen
@@ -40,6 +40,7 @@ class FBprodutos():
         return data
     
     def getDataLen(self):
-        fullSql = "SELECT COUNT(CODPROD) FROM PRODUTO"
+        fullSql = "SELECT COUNT(CODIGO) FROM PRODUTO LEFT JOIN PRODUTOPRECO ON PRODUTO.CODPROD = PRODUTOPRECO.CODPROD WHERE CODPRECO = 1"
+        print("SQL GETDATALEN ", fullSql)
         return self.cur.execute(fullSql).fetchall()[0][0]
     
