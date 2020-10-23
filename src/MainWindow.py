@@ -13,6 +13,8 @@ from src.utils.Paper import Paper
 
 from src.utils.QTableWidgetHandler import QTableWidgetHandler
 
+from src import DatabaseConfig
+
 class MainWindow(QtWidgets.QMainWindow, Ui_Main.Ui_MainWindow):
     def __init__(self):
         QtWidgets.QMainWindow.__init__(self)
@@ -31,6 +33,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_Main.Ui_MainWindow):
         self.pbAdd.clicked.connect(self.addOutputRow)
         self.pbRemove.clicked.connect(self.removeOutputRow)
         self.pbGenerate.clicked.connect(self.generate)
+        
+        self.actionBanco_de_dados.triggered.connect(self.openDatabaseConfig)
 
         self.showMaximized()
         
@@ -78,5 +82,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_Main.Ui_MainWindow):
             
         paper = Paper()
         paper.buildPaper(data, self.sbHorizontalPos.value(), self.sbVerticalPos.value())
+        
+    def openDatabaseConfig(self):
+        configDialog = DatabaseConfig.MainWindow()
+        configDialog.exec()
             
                 
