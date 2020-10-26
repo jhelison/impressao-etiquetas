@@ -1,0 +1,6 @@
+requests==2.22.0
+fdb==2.0.1
+beautifulsoup4==4.9.3
+bing_image_downloader==1.0.4
+Pillow==8.0.1
+PyQt5==5.15.1

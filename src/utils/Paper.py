@@ -4,6 +4,8 @@ import os
 
 from src.utils.Tag import Tag
 
+from src.config.ConfigDB import ConfigDB
+
 def cmToPixel(cms):
     return int(cms * 370.7952755906)
 
@@ -12,6 +14,7 @@ PAPERHEIGHT = cmToPixel(29.7)
 
 class Paper():
     def __init__(self):
+        self.db = ConfigDB()
         self.paper = None
         
         self.PageHorizontalSpacing = cmToPixel(0.75)
@@ -65,9 +68,10 @@ class Paper():
         if xPos != 1 or yPos != 1:
             images.append(self.paper)
                 
+        outputLocation = self.db.get('leOutuput') + "\\out.pdf"
                 
-        images[0].save("out.pdf", save_all=True, append_images=images[1:], resolution=300)
-        os.startfile("out.pdf")
+        images[0].save(outputLocation, save_all=True, append_images=images[1:], resolution=300)
+        os.startfile(outputLocation)
                 
                     
                     
