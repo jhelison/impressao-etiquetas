@@ -56,7 +56,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Versão 0.1</string>
+      <string>Versão 0.21</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -78,7 +78,7 @@
       </size>
      </property>
      <property name="text">
-      <string>23/10/2020</string>
+      <string>26/10/2020</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

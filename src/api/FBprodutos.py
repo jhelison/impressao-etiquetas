@@ -5,7 +5,7 @@ class FBprodutos():
     def __init__(self, cur):
         self.cur = cur
         
-        self.COLUMNS = ["CODIGO", "NOMEPROD", "PRECO"]
+        self.COLUMNS = ["CODIGO", "NOMEPROD", "PRECO", "DATAREAJUSTE"]
                         
         self.dataLen = self.getDataLen()
         self.totalLen = self.dataLen
@@ -20,11 +20,15 @@ class FBprodutos():
             pagingSQL = ""
         
         if filter[1]:
-            filterSQL = f"AND {filter[0]} LIKE \'%{filter[1]}%\'"
+            searchedText = filter[1]
+            searchedText = searchedText.split()
+            filterSQL = ""
+            for wordText in searchedText:
+                filterSQL = filterSQL + f" AND {filter[0]} SIMILAR TO \'%{wordText}%\'"
         else:
             filterSQL = ""
             
-        fullSql = f"SELECT {pagingSQL} CODIGO, NOMEPROD, PRECO FROM PRODUTO LEFT JOIN PRODUTOPRECO ON PRODUTO.CODPROD = PRODUTOPRECO.CODPROD WHERE CODPRECO = 1 {filterSQL}"
+        fullSql = f"SELECT {pagingSQL} CODIGO, NOMEPROD, PRECO, DATAREAJUSTE FROM PRODUTO LEFT JOIN PRODUTOPRECO ON PRODUTO.CODPROD = PRODUTOPRECO.CODPROD WHERE CODPRECO = 1 {filterSQL}"
         
         print("SQL GET 1 ", fullSql)
         

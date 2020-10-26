@@ -38,7 +38,7 @@ class Tag():
         for index, word in enumerate(words):
             nextWord = False
             while not nextWord:
-                if len(line + ' ' + word) <= 22:
+                if len(line + ' ' + word) <= 21:
                     if line == '':
                         line = word
                     else:
