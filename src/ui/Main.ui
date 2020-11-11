@@ -80,6 +80,13 @@
            </property>
           </spacer>
          </item>
+         <item>
+          <widget class="QPushButton" name="pbLimpar">
+           <property name="text">
+            <string>Limpar</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
        <item>
@@ -276,7 +283,7 @@
      <x>0</x>
      <y>0</y>
      <width>932</width>
-     <height>20</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuConfigura_es">

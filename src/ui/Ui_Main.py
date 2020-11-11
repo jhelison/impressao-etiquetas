@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\Users\Jhelison\Documents\full python Projects\Impressão de etiquetas\src\ui\Main.ui'
+# Form implementation generated from reading ui file 'c:\Users\Jhelison\Documents\full python Projects\impressaoetiquetas\src\ui\Main.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.0
 #
@@ -46,6 +46,9 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.addWidget(self.pbRemove)
         spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_3.addItem(spacerItem1)
+        self.pbLimpar = QtWidgets.QPushButton(self.horizontalGroupBox)
+        self.pbLimpar.setObjectName("pbLimpar")
+        self.verticalLayout_3.addWidget(self.pbLimpar)
         self.horizontalLayout.addLayout(self.verticalLayout_3)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
         self.verticalLayout_2.setObjectName("verticalLayout_2")
@@ -126,7 +129,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addLayout(self.horizontalLayout_6)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 932, 20))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 932, 25))
         self.menubar.setObjectName("menubar")
         self.menuConfigura_es = QtWidgets.QMenu(self.menubar)
         self.menuConfigura_es.setObjectName("menuConfigura_es")
@@ -160,6 +163,7 @@ class Ui_MainWindow(object):
         self.horizontalGroupBox.setTitle(_translate("MainWindow", "Itens à gerar etiqueta"))
         self.pbAdd.setText(_translate("MainWindow", "Adicionar >>"))
         self.pbRemove.setText(_translate("MainWindow", "<< Remover"))
+        self.pbLimpar.setText(_translate("MainWindow", "Limpar"))
         self.verticalGroupBox_4.setTitle(_translate("MainWindow", "Posição inicial da etiqueta"))
         self.label.setText(_translate("MainWindow", "Posição Inicial Horizontal"))
         self.label_2.setText(_translate("MainWindow", "Posição Inicial Vertical"))

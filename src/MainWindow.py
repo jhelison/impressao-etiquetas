@@ -3,6 +3,7 @@ import sys
 import fdb
 import time
 import os
+import math
 
 from src.ui import Ui_Main
 
@@ -32,11 +33,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_Main.Ui_MainWindow):
         self.pbRemove.clicked.connect(self.removeOutputRow)
         self.pbGenerate.clicked.connect(self.generate)
         self.pbOpenFolder.clicked.connect(self.openFolder)
+        self.pbLimpar.clicked.connect(self.cleanOutputTable)
         
         self.actionBanco_de_dados.triggered.connect(self.openDatabaseConfig)
         self.actionEtiqueta.triggered.connect(lambda _: self.show_error("Ainda não implementado, aguarde"))
         self.actionFolha.triggered.connect(lambda _: self.show_error("Ainda não implementado, aguarde"))
         self.actionSobre.triggered.connect(self.aboutAction)
+        
+        self.sbHorizontalPos.valueChanged.connect(self.updateStatusBar)
+        self.sbVerticalPos.valueChanged.connect(self.updateStatusBar)
         
         self.loadTableData()
 
@@ -80,8 +85,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_Main.Ui_MainWindow):
             self.twOutputItens.setItem(outputNumRows, index,newItem)
         spinBoxWidget = QtWidgets.QSpinBox()
         spinBoxWidget.setMinimum(1)
+        spinBoxWidget.valueChanged.connect(self.updateStatusBar)
         self.twOutputItens.setCellWidget(outputNumRows, 3, spinBoxWidget)
         self.twOutputItens.resizeColumnsToContents()
+        
+        self.updateStatusBar()
 
     def removeOutputRow(self):
         table = self.findChild(QtWidgets.QTableWidget, "twOutputItens")
@@ -89,6 +97,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_Main.Ui_MainWindow):
         
         if items:
             table.removeRow(items[0].row())
+            
+        self.updateStatusBar()
             
     def generate(self):
         rows = self.twOutputItens.rowCount()
@@ -156,8 +166,24 @@ class MainWindow(QtWidgets.QMainWindow, Ui_Main.Ui_MainWindow):
             spinBoxWidget.setValue(line[3])
             self.twOutputItens.setCellWidget(index, 3, spinBoxWidget)
             
-    
-    #Execute on closing the qt
+    def cleanOutputTable(self):
+        self.twOutputItens.setRowCount(0)
+        self.updateStatusBar()
+        
+    def updateStatusBar(self):
+        numHorizontal = self.sbHorizontalPos.value()
+        numVertical = self.sbVerticalPos.value()
+        
+        numTag = 0
+        
+        for row in range(self.twOutputItens.rowCount()):
+            numTag += self.twOutputItens.cellWidget(row, 3).value()
+            
+        totalPages = math.ceil((((numHorizontal * numVertical) - 1) + numTag) / 27)
+        
+        self.statusbar.showMessage(f"Total de Páginas = {totalPages}, Total de Etiquetas = {numTag}")
+        
+    #Execute on closing the QTWindow
     def closeEvent(self, event):
         self.saveTableData()
                 
