@@ -37,6 +37,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_Main.Ui_MainWindow):
         self.actionEtiqueta.triggered.connect(lambda _: self.show_error("Ainda não implementado, aguarde"))
         self.actionFolha.triggered.connect(lambda _: self.show_error("Ainda não implementado, aguarde"))
         self.actionSobre.triggered.connect(self.aboutAction)
+        
+        self.loadTableData()
 
         self.showMaximized()
         
@@ -128,4 +130,34 @@ class MainWindow(QtWidgets.QMainWindow, Ui_Main.Ui_MainWindow):
         except BaseException as e:
             self.show_error(str(e))
             
+    def saveTableData(self):
+        rows = self.twOutputItens.rowCount()
+        
+        data = []
+        for row in range(rows):
+            data.append([self.twOutputItens.item(row, 0).text(),
+                         self.twOutputItens.item(row, 1).text(),
+                         self.twOutputItens.item(row, 2).text(),
+                         self.twOutputItens.cellWidget(row, 3).value()])
+        
+        self.db.save("tableData", data)
+        
+    def loadTableData(self):
+        tableData = self.db.get("tableData")
+        
+        self.twOutputItens.setRowCount(len(tableData))
+        
+        for index, line in enumerate(tableData):
+            self.twOutputItens.setItem(index, 0, QtWidgets.QTableWidgetItem(line[0]))
+            self.twOutputItens.setItem(index, 1, QtWidgets.QTableWidgetItem(line[1]))
+            self.twOutputItens.setItem(index, 2, QtWidgets.QTableWidgetItem(line[2]))
+            spinBoxWidget = QtWidgets.QSpinBox()
+            spinBoxWidget.setMinimum(1)
+            spinBoxWidget.setValue(line[3])
+            self.twOutputItens.setCellWidget(index, 3, spinBoxWidget)
+            
+    
+    #Execute on closing the qt
+    def closeEvent(self, event):
+        self.saveTableData()
                 

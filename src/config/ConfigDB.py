@@ -8,7 +8,7 @@ class ConfigDB():
             
         try:
             self.getConfig()
-        except:
+        except: 
             self.config = {}
             self.init()
             
@@ -18,6 +18,7 @@ class ConfigDB():
         self.config['leLogin'] = "sysdba"
         self.config['lePassword'] = "masterkey"
         self.config['leOutuput'] = ""
+        self.config['tableData'] = []
            
         with open('./config/config.json', 'w') as f:     
             json.dump(self.config, f)
