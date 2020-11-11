@@ -1,5 +1,5 @@
 __pycache__/
 /config/
-.png
-.pdf
-.log
+*.png
+*.pdf
+*.log
