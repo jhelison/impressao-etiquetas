@@ -3,10 +3,9 @@
 # Changelog
 
 # Versão 0.21
-- Adicionado requirements.txt
+- Adicionado
 - Corrigido quantidade maxima de letras por linha, em que estava cortando letras
 - Adicionada a capacidade de filtrar os itens por varias palavras usando o similar to e multiplos wheres
-- Adicionada a coluna ultimo reajuste para facilidade na impressão de etiquetas
 
 # Versão 0.1
 - Primeira versão com funcionalidades principais
